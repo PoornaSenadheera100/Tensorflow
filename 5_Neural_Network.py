@@ -23,3 +23,14 @@ def createModel():
 
 mymodel = createModel()
 print(mymodel.summary())
+
+mymodel.compile(
+    # Since the label equals to the output, use SparseCategoricalCrossentropy
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer=keras.optimizers.Adam(learning_rate=0.001),
+    metrics=["accuracy"]
+)
+
+mymodel.fit(x_train, y_train, batch_size=32, epochs=5, verbose=2)
+
+mymodel.evaluate(x_test, y_test, batch_size=32, verbose=2)
